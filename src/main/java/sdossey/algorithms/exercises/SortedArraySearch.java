@@ -3,6 +3,24 @@ package sdossey.algorithms.exercises;
 import sdossey.algorithms.datasets.Words;
 
 public class SortedArraySearch {
+
+	// Recursive implementation
+	public static boolean binarySearch(String[] data, int start, int end, String searchString) {
+		if (start > end) {
+			return false;
+		}
+		int midpoint = (start + end) / 2; // fixed--(put start+end in parenthesis)
+		String compareString = data[midpoint];
+		int compareResult = searchString.compareTo(compareString);
+		if (compareResult < 0) {
+			return binarySearch(data, start, midpoint - 1, searchString);
+		} else if (compareResult > 0) {
+			return binarySearch(data, midpoint + 1, end, searchString);
+		} else /* equal */ {
+			return true;
+		}
+	}
+
 	public static boolean contains(String[] data, String searchString) {
 		// Reimplement this method to be faster.
 		// It is okay to create other methods that are called,
@@ -28,10 +46,11 @@ public class SortedArraySearch {
 			// index
 			int compareResult = searchString.compareTo(data[middle]);
 
-			// if compareTo returns 0, they are equal and therefore searchString exists in data
-			if (compareResult == 0) return true;
+			// if compareTo returns 0, they are equal and therefore searchString exists in
+			// data
+			if (compareResult == 0)
+				return true;
 
-			
 			if (compareResult > 0) {
 				// Search string bigger than (further along in alphabet than) current data in
 				// the middle
@@ -39,8 +58,10 @@ public class SortedArraySearch {
 				// increment because we already checked it
 				left = middle + 1;
 			} else {
-				// If search string smaller than (earlier in alphabet than) current data in middle
-				// we need to bring our right backwards because there's no chance of it being later in alphabet than middle
+				// If search string smaller than (earlier in alphabet than) current data in
+				// middle
+				// we need to bring our right backwards because there's no chance of it being
+				// later in alphabet than middle
 				// decrement because we already checked it
 				right = middle - 1;
 			}
@@ -48,7 +69,9 @@ public class SortedArraySearch {
 
 		// Return false after search because we couldn't find the searchString
 		return false;
+//		return binarySearch(data, 0, data.length - 1, searchString);
 	}
+	
 
 	public static final void main(String[] args) {
 		String[] data = Words.ENGLISH;
