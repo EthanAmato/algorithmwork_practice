@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JComponent;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Stack;
 
 public class Ruler extends JComponent {
 	private static final long serialVersionUID = 1L;
@@ -49,16 +50,47 @@ public class Ruler extends JComponent {
 //
 //		markRulerAtIntervals(step / 2, tickLength + 5, g, width);
 //	}
-	
+
 	public void markRuler(Graphics g, double start, double end, int markSize) {
-		if(markSize <= 0) return;
-		
+		if (markSize <= 0)
+			return;
+
 		double midPoint = (start + end) / 2;
 		makeMark(g, midPoint, markSize);
-	
-		markRuler(g, start, midPoint, markSize-5);
-		markRuler(g, midPoint, end, markSize-5);
+
+		markRuler(g, start, midPoint, markSize - 5);
+		markRuler(g, midPoint, end, markSize - 5);
 	}
+
+	static class MarkRulerInformation {
+		double start;
+		double end;
+		int markSize;
+
+		public MarkRulerInformation(double start, double end, int markSize) {
+			this.start = start;
+			this.end = end;
+			this.markSize = markSize;
+		}
+	}
+
+	public void markRulerInformationIteratively(Graphics g, double width) {
+		Stack<MarkRulerInformation> stack = new Stack<>();
+		stack.push(new MarkRulerInformation(0, width, 30));
+		while (!stack.isEmpty()) {
+			MarkRulerInformation markInfo = stack.pop();
+
+			double midPoint = (markInfo.start + markInfo.end) / 2;
+			if (markInfo.markSize >= 0) {
+			}
+
+//			makeMark(g, 0, midPoint, markInfo.markSize);
+			stack.push(new MarkRulerInformation(markInfo.start, markInfo.end, markInfo.markSize - 5));
+
+		}
+	}
+
+	
 
 	public void markRuler(Graphics g, double width) {
 		// Currently this code marks the ruler into
@@ -93,13 +125,8 @@ public class Ruler extends JComponent {
 
 //		markRulerAtIntervals(64, 5, g, width);
 		// It is okay to add methods.
-		
-		markRuler(g, 0, width, 30 );
-		
-		
-		
-		
-		
-		
+
+		markRuler(g, 0, width, 30);
+
 	}
 }

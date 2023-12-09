@@ -18,7 +18,25 @@ public class MakeASort {
 		frame.setSize(800, 600);
 		frame.setVisible(true);
 
-		sort(visualizer.getInstrumentedList());
+//		sort(visualizer.getInstrumentedList());
+		insertionSort(visualizer.getInstrumentedList());
+	}
+/*
+ * To sort an array of size N in ascending order iterate over the array and compare 
+ * the current element (key) to its predecessor, if the key element is smaller than 
+ * its predecessor, compare it to the elements before. Move the greater elements one 
+ * position up to make space for the swapped element.
+ * */
+	private static void insertionSort(InstrumentedList<Integer> list) {
+
+		for(int i = 0; i < list.size(); i++) {
+			if(i == 0) {
+				
+			}
+			
+			list.get(i).compareTo(null);
+		}
+		
 	}
 
 	static final void sort(InstrumentedList<Integer> list) {
@@ -57,6 +75,9 @@ public class MakeASort {
 		}
 		
 		// Avg of O(n^2) time complexity, O(1) Space complexity
+		// Worst Case + Best Case = n^2
+		// Typically, selection sort behaves very badly - ends up being slower than 
+		// bubble sort... Certainly slower than insertion sort despite all of them being O(n^2) time complexity 
 		
 		*/
 		
@@ -82,5 +103,16 @@ public class MakeASort {
 			list.exchange(currMinIndex, i);
 		}
 		// Should also be Time complexity O(n^2) with Space complexity O(1)
+		
+		
+		
+		
 	}
+	
+	
+
+	
+	
+	
+	
 }
