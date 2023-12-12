@@ -1,5 +1,8 @@
 package sdossey.algorithms.exercises;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JFrame;
 
 import sdossey.algorithms.datasets.RandomData;
@@ -8,8 +11,16 @@ import sdossey.algorithms.util.IntArrayVisualizer;
 
 public class MakeASort {
 	public static final void main(String[] args) {
-		double delay = .1; // Second delay between visualization step.
+		double delay = .01; // Second delay between visualization step.
+
+//		ArrayList<Integer> test = new ArrayList<>();
+//		test.add(4);
+//		test.add(2);
+//		test.add(1);
+//		test.add(3);
+
 		IntArrayVisualizer visualizer = new IntArrayVisualizer(RandomData.randomIntList(1, 51, 30), delay);
+//		IntArrayVisualizer visualizer = new IntArrayVisualizer(test, delay);
 
 		JFrame frame = new JFrame("Sorting Visualization App");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,26 +41,42 @@ public class MakeASort {
 	 */
 	private static void insertionSort(InstrumentedList<Integer> list) {
 
+		// Placeholder elements:
 		Integer currValue;
 		Integer j;
 
-		// guaranteed to have at least 2 elements in list, so this is safe
-		for (int i = 0; i < list.size(); i++) {
-			// Get current item
+		// Do a pass for each element in the list
+		for (int i = 1; i < list.size(); i++) {
+			// Get the value at the current index we are evaluating
 			currValue = list.get(i);
-			j = i - 1;
-			// Compare next two:
+			j = i - 1; // compare to prev in line in list
 
-			// If curr bigger than next, we are not in ascending order
+			// So long as the previous element index is within the bounds of the array (0 or bigger)
+			// and is bigger than the current value of the element we are working with,
+			// we will continue swapping backwards
 			while (j >= 0 && list.get(j) > currValue) {
-				// Move each element over by one to make room for next smallest item
-				list.set(j+1, list.get(j));
+				list.exchange(i, j);
 				j--;
+				i--;
 			}
-
-			list.set(j+1, currValue);
-
 		}
+
+//		for (int i = 0; i < list.size(); i++) {
+//			// Get current item
+//			currValue = list.get(i);
+//			j = i - 1;
+//			// Compare next two:
+//
+//			// If curr bigger than next, we are not in ascending order
+//			while (j >= 0 && list.get(j) > currValue) {
+//				// Move each element over by one to make room for next smallest item
+//				list.set(j+1, list.get(j));
+//				j--;
+//			}
+//
+//			list.set(j+1, currValue);
+//
+//		}
 
 	}
 
