@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import sdossey.algorithms.util.InstrumentedList;
+import sdossey.algorithms.util.RandomStringArray;
 
 public class MergeSortPractice {
 	public static final String[] merge(String[] firstList, String[] secondList) {
@@ -74,8 +75,8 @@ public class MergeSortPractice {
 		String[] left = Arrays.copyOfRange(list, 0, midpoint);
 		String[] right = Arrays.copyOfRange(list, midpoint, size);
 
-		mergeSort(left, midpoint);
-		mergeSort(right, list.length - midpoint);
+		left = mergeSort(left, midpoint);
+		right = mergeSort(right, list.length - midpoint);
 
 		return merge(left, right);
 	}
@@ -88,13 +89,22 @@ public class MergeSortPractice {
 //		for (String val : res) {
 //			System.out.println(val);
 //		}
-		String[] words3 = new String[] { "Cucumber", "Deaconfruit", "Apple", "Banana", "Dragonfruit", "Fruit", "Pear",
-				"Z-Fruit" };
-
-		String[] res2 = mergeSort(words3, words3.length);
-		for (String val : res2) {
-			System.out.println(val);
-		}
+//		String[] words3 = new String[] { "Cucumber", "Deaconfruit", "Apple", "Banana", "Dragonfruit", "Fruit", "Pear",
+//				"Z-Fruit" };
+		String[] randomStrings = RandomStringArray.generateRandomStringArray(10, 8); // Array of 10 strings, each of length 8
+        System.out.print("[");
+        for (String str : randomStrings) {
+            System.out.print(str+", ");
+        }
+        System.out.print("]\n");
+        
+        
+		String[] res2 = mergeSort(randomStrings, randomStrings.length);
+	     System.out.print("[");
+	        for (String str : res2) {
+	            System.out.print(str+", ");
+	        }
+	        System.out.print("]");
 	}
 
 }
