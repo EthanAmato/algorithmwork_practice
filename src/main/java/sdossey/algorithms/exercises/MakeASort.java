@@ -11,7 +11,7 @@ import sdossey.algorithms.util.IntArrayVisualizer;
 
 public class MakeASort {
 	public static final void main(String[] args) {
-		double delay = .01; // Second delay between visualization step.
+		double delay = .05; // Second delay between visualization step.
 
 //		ArrayList<Integer> test = new ArrayList<>();
 //		test.add(4);
@@ -19,7 +19,7 @@ public class MakeASort {
 //		test.add(1);
 //		test.add(3);
 
-		IntArrayVisualizer visualizer = new IntArrayVisualizer(RandomData.randomIntList(1, 51, 30), delay);
+		IntArrayVisualizer visualizer = new IntArrayVisualizer(RandomData.randomIntList(1, 30, 20), delay);
 //		IntArrayVisualizer visualizer = new IntArrayVisualizer(test, delay);
 
 		JFrame frame = new JFrame("Sorting Visualization App");
@@ -30,7 +30,77 @@ public class MakeASort {
 		frame.setVisible(true);
 
 //		sort(visualizer.getInstrumentedList());
-		insertionSort(visualizer.getInstrumentedList());
+//		insertionSort(visualizer.getInstrumentedList());
+		cocktailSort(visualizer.getInstrumentedList());
+	}
+
+	private static void cocktailSortAttemptOne(InstrumentedList<Integer> list) {
+		// Start with bubble sort:
+		int sortedIndex = 0;
+		for (int i = 0; i < list.size(); i++) {
+			int j;
+			for (j = 0; j < list.size() - i - 1; j++) {
+				// If pass's value is bigger than sub-pass's we swap because bigger should be
+				// towards end
+				if (list.get(j).compareTo(list.get(j + 1)) >= 0) {
+					list.exchange(j, j + 1);
+				}
+			}
+			sortedIndex++;
+			for (int k = j; k > sortedIndex+i; k--) {
+				if(list.get(k).compareTo(list.get(k-1)) < 0) {
+					list.exchange(k, k-1);
+				}
+			}
+
+		}
+
+	}
+	private static void cocktailSort(InstrumentedList<Integer> list) {
+	    boolean swapped = true;
+	    int start = 0;
+	    int end = list.size();
+
+	    while (swapped) {
+	        // reset the swapped flag on entering the loop,
+	        // because it might be true from a previous iteration.
+	        swapped = false;
+
+	        // loop from bottom to top same as the bubble sort
+	        for (int i = start; i < end - 1; ++i) {
+	            if (list.get(i).compareTo(list.get(i + 1)) > 0) {
+	                list.exchange(i, i + 1);
+	                swapped = true;
+	            }
+	        }
+
+	        // if nothing moved, then the array is sorted.
+	        if (!swapped)
+	            break;
+
+	        // otherwise, reset the swapped flag so that it
+	        // can be used in the next stage
+	        swapped = false;
+
+	        // move the end point back by one, because
+	        // the item at the end is in its rightful spot
+	        end--;
+
+	        // from top to bottom, doing the same
+	        // comparison as in the previous stage
+	        for (int i = end - 1; i >= start; i--) {
+	            if (list.get(i).compareTo(list.get(i + 1)) > 0) {
+	                list.exchange(i, i + 1);
+	                // Still set swapped to true since the while loop runs on the condition that we swapped
+	                swapped = true;
+	            }
+	        }
+
+	        // increase the starting point, because
+	        // the last stage would have moved the next
+	        // smallest number to its rightful spot.
+	        start++;
+	    }
 	}
 
 	/*
@@ -51,7 +121,8 @@ public class MakeASort {
 			currValue = list.get(i);
 			j = i - 1; // compare to prev in line in list
 
-			// So long as the previous element index is within the bounds of the array (0 or bigger)
+			// So long as the previous element index is within the bounds of the array (0 or
+			// bigger)
 			// and is bigger than the current value of the element we are working with,
 			// we will continue swapping backwards
 			while (j >= 0 && list.get(j) > currValue) {
